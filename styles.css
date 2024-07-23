@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  display: grid;
+  grid-template-areas: 
+  "header-container header-container"
+  "side-bar main-section";
+  grid-template-columns: 20% 80%;
+  grid-template-rows: auto 1fr;
+  height: 100vh;
+}
+
+.header-container {
+  grid-area: header-container;
+  padding: 1rem;
+  background-color: #1d4ed8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  color: white;
+}
+
+.logo-title {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+/* side-bar styles */
+
+.side-bar {
+  grid-area: side-bar;
+  background-color: #93c5fd;
+  box-shadow: 10px 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.book-filters {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-left: 2rem;
+}
+
+.book-filters button {
+  margin-top: 2rem;
+  max-width: 30%;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f0f9ff;
+  font-weight: bold;
+  color: #1e293b;
+  cursor: pointer;
+}
+
+.book-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 16px; 
+  padding: 16px;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* main-section styles*/
+
+.main-section {
+  grid-area: main-section;
+  background-color: #dbeafe;
+}
+
+.new-book-btn {
+  border: none;
+  border-radius: 8px;
+  padding: .8rem;
+  margin: 1.5rem;
+  background-color: #1e40af;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.new-book-form {
+  display: flex;
+  flex-direction: column;
+  background-color: #eff6ff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+.new-book-form input[type="text"],
+.new-book-form input[type="number"] {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #93c5fd;
+  border-radius: 5px;
+  font-size: 16px;
+  width: calc(100% - 22px);
+}
+
+.new-book-form input[type="text"]:focus,
+.new-book-form input[type="number"]:focus {
+  border-color: #1d4ed8;
+    box-shadow: 0 0 5px rgba(30, 58, 138, 0.3);
+    outline: none;
+}
+
+.new-book-form .checkbox-label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  font-size: 16px;
+  gap: 8px;
+
+}
+
+.new-book-form .checkbox-label input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+}
+
+.new-book-form button[type="submit"] {
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  
+  cursor: pointer;
+  color: white;
+  background-color: #1e40af;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.new-book-form button[type="submit"]:hover {
+  background-color: #3988ea;
+}
+
+.book-card p {
+  margin: 8px 0;
+}
+
+.book-card .button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 5px;
+  gap: 10px;
+}
+
+.book-card .label {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Estilos para el estado de lectura del libro */
+
+.book-card .read {
+  font-weight: bold;
+  color: green;
+}
+
+.book-card .unread {
+  font-weight: bold;
+  color: red;
+}
+
+/* Estilos para los botones remove y toggle */
+
+.button-container button {
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px; 
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.remove-btn {
+  background-color: #3988ea;
+  color: white;
+}
+
+.remove-btn:hover {
+  background-color: #0b4387;
+}
+
+.toggle-btn {
+  background-color: #3988ea;
+  color: white;
+}
+
+.toggle-btn:hover {
+  background-color: #0b4387;
+}
