@@ -30,6 +30,7 @@ function addBookToLibrary(title, author, pages, isRead) {
   const newBook = new Book(title, author, pages, isRead);
   myLibrary.push(newBook); // Se almacena el nuevo libro (newBook) al Array myLibrary
   displayBooks();
+  document.getElementById('library').style.display = 'grid'; // Después de agregar el libro, muestra las tarjetas
 }
 
 function displayBooks() { // función que se encarga de mostrar los libros almacenados en el array 'myLibrary'
@@ -117,13 +118,17 @@ function toggleReadStatus(index) {
   displayBooks();
 }
 
-
+// Evento para abrir el formulario
 document.getElementById('new-book-btn').addEventListener('click', () => {
-  document.getElementById('new-book-form').style.display = 'block';
+  document.getElementById('library').style.display = 'none'; // Oculta las tarjetas existentes
+  document.getElementById('new-book-form').style.display = 'block'; // Muestra el formulario
+
 });
 
+// Evento para agregar un libro nuevo
 document.getElementById('new-book-form').addEventListener('submit', (event) => {
-  event.preventDefault();
+  event.preventDefault(); // Evita que se envía el formulario
+
   const title = document.getElementById('title').value;
   const author = document.getElementById('author').value;
   const pages = document.getElementById('pages').value;
@@ -132,5 +137,12 @@ document.getElementById('new-book-form').addEventListener('submit', (event) => {
   addBookToLibrary(title, author, pages, isRead);
 
   document.getElementById('new-book-form').reset();
+  document.getElementById('new-book-form').style.display = 'none'; // Oculta el formulario
+  document.getElementById('library').style.display = 'grid'; // Muestras las tarjetas
+});
+
+// Evento para cerrar el formulario
+document.getElementById('close-form-btn').addEventListener('click', () => {
   document.getElementById('new-book-form').style.display = 'none';
+  document.getElementById('library').style.display = 'grid'; // Muestra las tarjetas
 });

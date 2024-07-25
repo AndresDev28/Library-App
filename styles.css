@@ -17,6 +17,8 @@ body {
   height: 100vh;
 }
 
+/* Header styles */
+
 .header-container {
   grid-area: header-container;
   padding: 1rem;
@@ -63,24 +65,35 @@ body {
   cursor: pointer;
 }
 
-.book-card {
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 16px; 
-  padding: 16px;
-  width: 200px;
-  display: flex;
-  flex-direction: column;
-}
-
 /* main-section styles*/
 
 .main-section {
   grid-area: main-section;
   background-color: #dbeafe;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
+.library {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px; /* Espacio entre las tarjetas */
+  padding: 16px; /* Espacio interno del contenedor */
+  /* padding-left: 16px;  Espacio en el lado izquierdo */
+  /* padding-right: 16px;  Espacio en el lado derecho */
+  box-sizing: border-box; /* Asegura que el padding no cause desbordamiento */
+  width: 100%;
+
+}
+
+/* .library {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+} */
 
 .new-book-btn {
   border: none;
@@ -135,11 +148,17 @@ body {
   height: 20px;
 }
 
-.new-book-form button[type="submit"] {
+.form-btns {
+  display: flex;
+  justify-content: center;
+}
+
+.new-book-form button[type="submit"],
+.close-form-btn {
   border: none;
   padding: 10px;
   border-radius: 5px;
-  
+  margin-right: 20px;
   cursor: pointer;
   color: white;
   background-color: #1e40af;
@@ -151,16 +170,34 @@ body {
   background-color: #3988ea;
 }
 
-.book-card p {
-  margin: 8px 0;
+.close-form-btn:hover {
+  background-color: #3988ea;
 }
 
-.book-card .button-container {
+/* book-card styles */
+
+.book-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  padding: 16px;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  margin-right: 5px;
-  gap: 10px;
 }
+
+.book-card p {
+  margin: 4px 0;
+}
+
+.button-container {
+  display: flex;
+  margin-top: 16px;
+  gap: 8px;
+}
+
+
 
 .book-card .label {
   font-weight: bold;
@@ -206,3 +243,5 @@ body {
 .toggle-btn:hover {
   background-color: #0b4387;
 }
+
+
