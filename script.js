@@ -2,35 +2,40 @@ const myLibrary = []; // Array donde almacenaremos los libros introducidos por e
 const booksReaded = [];
 const booksNotReaded = [];
 
-function Book(title, author, pages, isRead) {
+// Refactor constructor function using a class function
+class Book { 
+  constructor (title, author, pages, isRead) { 
   this.title = title;
   this.author = author;
   this.pages = pages;
   this.isRead = isRead;
+  }
+
+  toggleReadStatus () {
+    this.isRead = !this.isRead;
+    }
 }
 
-Book.prototype.toggleReadStatus = function() {
-  this.isRead = !this.isRead;
-};
+
 
 // Selecciona el boton 'Total Books' en el DOM y agregamos un event click para llamar la funcion que muestra todos los libros
 document.getElementById('total-books-btn').addEventListener('click', () => {
-  displayBooks();
+displayBooks();
 });
 
 document.getElementById('read-books-btn').addEventListener('click', () => {
-  displayReadBooks();
+displayReadBooks();
 });
 
 document.getElementById('unread-books-btn').addEventListener('click', () => {
-  displayUnreadBooks();
+displayUnreadBooks();
 });
 
 function addBookToLibrary(title, author, pages, isRead) {
-  const newBook = new Book(title, author, pages, isRead);
-  myLibrary.push(newBook); // Se almacena el nuevo libro (newBook) al Array myLibrary
-  displayBooks();
-  document.getElementById('library').style.display = 'grid'; // Después de agregar el libro, muestra las tarjetas
+const newBook = new Book(title, author, pages, isRead);
+myLibrary.push(newBook); // Se almacena el nuevo libro (newBook) al Array myLibrary
+displayBooks();
+document.getElementById('library').style.display = 'grid'; // Después de agregar el libro, muestra las tarjetas
 }
 
 function displayBooks() { // función que se encarga de mostrar los libros almacenados en el array 'myLibrary'
@@ -42,16 +47,14 @@ function displayBooks() { // función que se encarga de mostrar los libros almac
     bookCard.dataset.index = index; // Se asigna el índice del libro como un atributo data-index al bookCard. Esto es útil para identificar el libro en futuras interacciones (como eliminar o cambiar el estado de lectura).
     bookCard.classList.add('book-card'); // Agregamos nombre de clase para estilos css.
     bookCard.innerHTML = // Se establece el contenido HTML de la tarjeta, incluyendo detalles del libro (título, autor, páginas, y estado de lectura) y dos botones: uno para eliminar el libro (Remove) y otro para cambiar su estado de lectura (Toggle Read Status).
-    `
-    <p><span class="label">Title</span>: ${book.title}</p>
-    <p><span class="label">Author</span>: ${book.author}</p>
-    <p><span class="label">Pages</span>: ${book.pages}</p>
-    <p><span class="label">Read</span>: <span class="${book.isRead ? 'read' : 'unread'}">${book.isRead ? 'Read' : 'Unread'}</span></p>
-    <div class="button-container">
+      `<p><span class="label">Title</span>: ${book.title}</p>
+      <p><span class="label">Author</span>: ${book.author}</p>
+      <p><span class="label">Pages</span>: ${book.pages}</p>
+      <p><span class="label">Read</span>: <span class="${book.isRead ? 'read' : 'unread'}">${book.isRead ? 'Read' : 'Unread'}</span></p>
+      <div class="button-container">
       <button class="remove-btn" onclick="removeBook(${index})">Remove</button>
       <button class="toggle-btn" onclick="toggleReadStatus(${index} )">Toggle Read Status</button>
-    </div>
-    `;
+      </div>`;
     libraryDiv.appendChild(bookCard);
   });
 }
@@ -62,20 +65,19 @@ function displayReadBooks() {
 
   myLibrary.forEach((book, index) => {
     if(book.isRead) {
-      const bookCard = document.createElement('div');
-      bookCard.dataset.index = index;
-      bookCard.classList.add('book-card');
-      bookCard.innerHTML = `
-        <p><span class="label">Title</span>: ${book.title}</p>
-        <p><span class="label">Author</span>: ${book.author}</p>
-        <p><span class="label">Pages</span>: ${book.pages}</p>
-        <p><span class="label">Read</span>: <span class="${book.isRead ? 'read' : 'unread'}">${book.isRead ? 'Read' : 'Unread'}</span></p>
-        <div class="button-container">
-          <button class="remove-btn" onclick="removeBook(${index})">Remove</button>
-          <button class="toggle-btn" onclick="toggleReadStatus(${index} )">Toggle Read Status</button>
-        </div>
-      `;
-      libraryDiv.appendChild(bookCard);
+    const bookCard = document.createElement('div');
+    bookCard.dataset.index = index;
+    bookCard.classList.add('book-card');
+    bookCard.innerHTML = 
+      `<p><span class="label">Title</span>: ${book.title}</p>
+      <p><span class="label">Author</span>: ${book.author}</p>
+      <p><span class="label">Pages</span>: ${book.pages}</p>
+      <p><span class="label">Read</span>: <span class="${book.isRead ? 'read' : 'unread'}">${book.isRead ? 'Read' : 'Unread'}</span></p>
+      <div class="button-container">
+      <button class="remove-btn" onclick="removeBook(${index})">Remove</button>
+      <button class="toggle-btn" onclick="toggleReadStatus(${index} )">Toggle Read Status</button>
+      </div>`; 
+    libraryDiv.appendChild(bookCard);
     }
   });
 }
@@ -89,16 +91,15 @@ function displayUnreadBooks() {
       const bookCard = document.createElement('div');
       bookCard.dataset.index = index;
       bookCard.classList.add('book-card');
-      bookCard.innerHTML = `
-        <p><span class="label">Title</span>: ${book.title}</p>
+      bookCard.innerHTML = 
+        `<p><span class="label">Title</span>: ${book.title}</p>
         <p><span class="label">Author</span>: ${book.author}</p>
         <p><span class="label">Pages</span>: ${book.pages}</p>
         <p><span class="label">Read</span>: <span class="${book.isRead ? 'read' : 'unread'}">${book.isRead ? 'Read' : 'Unread'}</span></p>
         <div class="button-container">
-          <button class="remove-btn" onclick="removeBook(${index})">Remove</button>
-          <button class="toggle-btn" onclick="toggleReadStatus(${index} )">Toggle Read Status</button>
-        </div>
-      `;
+        <button class="remove-btn" onclick="removeBook(${index})">Remove</button>
+        <button class="toggle-btn" onclick="toggleReadStatus(${index} )">Toggle Read Status</button>
+        </div>`; 
       libraryDiv.appendChild(bookCard);
     }
   });
@@ -122,7 +123,6 @@ function toggleReadStatus(index) {
 document.getElementById('new-book-btn').addEventListener('click', () => {
   document.getElementById('library').style.display = 'none'; // Oculta las tarjetas existentes
   document.getElementById('new-book-form').style.display = 'block'; // Muestra el formulario
-
 });
 
 // Evento para agregar un libro nuevo
