@@ -197,8 +197,6 @@ body {
   gap: 8px;
 }
 
-
-
 .book-card .label {
   font-weight: bold;
   color: #333;
@@ -244,4 +242,14 @@ body {
   background-color: #0b4387;
 }
 
+.error {
+  color: red;
+  font-size: 0.9em;
+}
 
+input:valid {
+  border-color: green;
+}
+input:invalid {
+  border-color: red;
+}

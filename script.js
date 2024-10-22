@@ -1,9 +1,11 @@
-const myLibrary = []; // Array donde almacenaremos los libros introducidos por el usuario
+import { addBookToLibrary } from "./libraryFunctions.js";
+
+export const myLibrary = []; // Array donde almacenaremos los libros introducidos por el usuario
 const booksReaded = [];
 const booksNotReaded = [];
 
 // Refactor constructor function using a class function
-class Book { 
+export class Book { 
   constructor (title, author, pages, isRead) { 
   this.title = title;
   this.author = author;
@@ -15,8 +17,6 @@ class Book {
     this.isRead = !this.isRead;
     }
 }
-
-
 
 // Selecciona el boton 'Total Books' en el DOM y agregamos un event click para llamar la funcion que muestra todos los libros
 document.getElementById('total-books-btn').addEventListener('click', () => {
@@ -31,12 +31,7 @@ document.getElementById('unread-books-btn').addEventListener('click', () => {
 displayUnreadBooks();
 });
 
-function addBookToLibrary(title, author, pages, isRead) {
-const newBook = new Book(title, author, pages, isRead);
-myLibrary.push(newBook); // Se almacena el nuevo libro (newBook) al Array myLibrary
-displayBooks();
-document.getElementById('library').style.display = 'grid'; // Después de agregar el libro, muestra las tarjetas
-}
+
 
 function displayBooks() { // función que se encarga de mostrar los libros almacenados en el array 'myLibrary'
   const libraryDiv = document.getElementById('library'); // Obtenemos el la referencia del elemento HTML con id 'Library'
@@ -56,6 +51,13 @@ function displayBooks() { // función que se encarga de mostrar los libros almac
       <button class="toggle-btn" onclick="toggleReadStatus(${index} )">Toggle Read Status</button>
       </div>`;
     libraryDiv.appendChild(bookCard);
+
+    // Agregar event listeners a los botones
+    bookCard.querySelector('.remove-btn').addEventListener('click', () => removeBook(index));
+    bookCard.querySelector('.toggle-btn').addEventListener('click', () => {
+      book.toggleReadStatus();
+      displayBooks();
+    });
   });
 }
 
@@ -78,6 +80,13 @@ function displayReadBooks() {
       <button class="toggle-btn" onclick="toggleReadStatus(${index} )">Toggle Read Status</button>
       </div>`; 
     libraryDiv.appendChild(bookCard);
+
+    // Agregar event listeners a los botones
+    bookCard.querySelector('.remove-btn').addEventListener('click', () => removeBook(index));
+    bookCard.querySelector('.toggle-btn').addEventListener('click', () => {
+        book.toggleReadStatus();
+        displayReadBooks();
+      });
     }
   });
 }
@@ -101,21 +110,19 @@ function displayUnreadBooks() {
         <button class="toggle-btn" onclick="toggleReadStatus(${index} )">Toggle Read Status</button>
         </div>`; 
       libraryDiv.appendChild(bookCard);
+
+      // Agregar event listeners a los botones
+    bookCard.querySelector('.remove-btn').addEventListener('click', () => removeBook(index));
+    bookCard.querySelector('.toggle-btn').addEventListener('click', () => {
+        book.toggleReadStatus();
+        displayUnreadBooks();
+      });
     }
   });
 }
 
 function removeBook(index) {
   myLibrary.splice(index, 1); // Elimina un elemento desde la posición index del array
-  displayBooks();
-}
-
-function toggleReadStatus(index) {
-  // Obtenemos el objeto Book del arreglo usando su índice
-  const book = myLibrary[index];
-  // Llamamos al método toggleReadStatus del objeto Book para invertir su valor
-  book.toggleReadStatus();
-  // Actualizamos la visualización llamando a displayBooks
   displayBooks();
 }
 
@@ -134,11 +141,18 @@ document.getElementById('new-book-form').addEventListener('submit', (event) => {
   const pages = document.getElementById('pages').value;
   const isRead = document.getElementById('isRead').checked;
 
+  // Validar el formulario antes de agregar el libro
+  if (validateForm()) {
+    return;
+  }
+
   addBookToLibrary(title, author, pages, isRead);
 
   document.getElementById('new-book-form').reset();
   document.getElementById('new-book-form').style.display = 'none'; // Oculta el formulario
   document.getElementById('library').style.display = 'grid'; // Muestras las tarjetas
+
+  displayBooks();
 });
 
 // Evento para cerrar el formulario
@@ -146,3 +160,65 @@ document.getElementById('close-form-btn').addEventListener('click', () => {
   document.getElementById('new-book-form').style.display = 'none';
   document.getElementById('library').style.display = 'grid'; // Muestra las tarjetas
 });
+
+// Validación del formulario
+function validateForm() {
+  let hasErros = false;
+
+  hasErros |= validateTitle();
+  hasErros |= validateAuthor();
+  hasErros |= validatePages();
+
+  if (hasErros) {
+    const addBtn = document.getElementById('add-btn');
+    const errorSpan = addBtn.nextElementSibling;
+    errorSpan.textContent = "Uno o mas campos del formulario no están rellenados correctamente";
+  }
+  return hasErros;
+}
+
+function validateTitle() {
+  const titleInput = document.getElementById('title');
+  const title = titleInput.value.trim();
+  const errorSpan = titleInput.nextElementSibling;
+
+  if(!title) {
+    errorSpan.textContent = "Por favor, introduce el título del libro"
+    return true // Hay un error
+  } else {
+    errorSpan.textContent = "";
+    return false;
+  }
+}
+
+function validateAuthor() {
+  const authorInput = document.getElementById('author');
+  const author = authorInput.value.trim();
+  const errorSpan = authorInput.nextElementSibling;
+
+  if (!author) {
+    errorSpan.textContent = "Por favor introduce el nombre del Autor"
+    return true;
+  } else {
+    errorSpan.textContent = "";
+    return false;
+  }
+}
+
+function validatePages() {
+  const pagesInput = document.getElementById('pages');
+  const pages = pagesInput.value.trim();
+  const errorSpan = pagesInput.nextElementSibling;
+
+  if (!pages || isNaN(pages) || pages <=0) {
+    errorSpan.textContent = "Por favor introduce un número válido de paginas"
+    return true;
+  } else {
+    errorSpan.textContent = "";
+    return false;
+  }
+}
+
+document.getElementById('title').addEventListener('blur', validateTitle);
+document.getElementById('author').addEventListener('blur', validateAuthor);
+document.getElementById('pages').addEventListener('blur', validatePages);

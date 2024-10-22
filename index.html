@@ -25,21 +25,26 @@
   <main class="main-section">
     <div class="library" id="library"></div>
   <button class="new-book-btn" id="new-book-btn">NEW BOOK</button>
-  <form class="new-book-form" id="new-book-form" style="display: none">
+  <form class="new-book-form" id="new-book-form" style="display: none" novalidate>
     <input type="text" id="title" name="title" placeholder="Title" required>
+    <span class="error" aria-live="polite"></span>
     <input type="text" name="author" id="author" placeholder="Author" required>
+    <span class="error" aria-live="polite"></span>
     <input type="number" name="pages" id="pages" placeholder="Pages" required>
+    <span class="error" aria-live="polite"></span>
     <label for="isRead" class="checkbox-label">
       <input type="checkbox" name="isRead" id="isRead"> Read
     </label>
     <div class="form-btns">
-      <button type="submit">Add Book</button>
+      <button type="submit" id="add-btn">Add Book</button>
+      <span class="error" aria-live="polite"></span>
       <button class="close-form-btn" id="close-form-btn" type="button">Close</button>
     </div>
   </form>
 
   </main>
   
-  <script src="script.js"></script>
+  <script type="module" src="./script.js"></script>
+  
 </body>
 </html>
